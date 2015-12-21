@@ -1048,7 +1048,7 @@ h3, h3 a, h3 span {
    schema document itself */
 table.properties th, table.properties th a {
    color: black;
-   background-color: #F99; /* Pink */
+   background-color: #69f
 }
 table.properties td {
    background-color: #eee; /* Gray */
@@ -1059,7 +1059,7 @@ table.properties td {
 
 /* Controls for switching between printing and viewing modes */
 div#printerControls {
-   color: #963; /* Orange-brown */
+   color: #69f;
 }
 /* Controls that can collapse or expand all XML Instance
    Representation and Schema Component Representation boxes */
@@ -1088,7 +1088,7 @@ span.targetNS {
 
 /* Name of schema component */
 .name {
-   color: #F93; /* Orange */
+   color: #69f;
 }
 
 /* Hierarchy table */
@@ -1367,6 +1367,14 @@ div#legend div.hint {
 
 .footer {
    font-size: 8pt;
+}
+
+.inline-doc {
+   float: right;
+   width: 70%;
+   font-family: Arial, sans-serif;
+   font-size: 10pt;
+   color: #000;
 }
 </xsl:text>
    </xsl:template>
@@ -2920,7 +2928,8 @@ div#legend div.hint {
             <td>
                <xsl:for-each select="$component/xsd:annotation/xsd:documentation">
                   <xsl:if test="position()!=1"><br/><br/></xsl:if>
-                  <xsl:apply-templates select="." mode="properties"/>
+                  <!--xsl:apply-templates select="."  mode="properties"/-->
+				  <xsl:copy-of select="." />
                </xsl:for-each>
             </td>
          </tr>
@@ -4275,7 +4284,8 @@ div#legend div.hint {
    <xsl:template name="PrintSampleDocumentation">
       <xsl:param name="component"/>
 
-      <xsl:if test="normalize-space(translate($useJavaScript,'TRUE','true'))='true' and $component and $component/xsd:annotation/xsd:documentation">
+	  <!-- normalize-space(translate($useJavaScript,'TRUE','true'))='true' and -->
+      <xsl:if test="$component and $component/xsd:annotation/xsd:documentation">
          <xsl:variable name="documentation">
             <xsl:for-each select="$component/xsd:annotation/xsd:documentation">
                <!-- Check for two dashes, which will break the JavaScript 
@@ -4313,11 +4323,19 @@ A local schema component contains two dashes in
          </xsl:variable>
 
          <xsl:text> </xsl:text>
-         <a href="javascript:void(0)" title="View Documentation" class="documentation">
+            <!--div style="clear:both" >
+            </div-->
+            <!--div style="float:left;  width: 19% ; margin: 0px; " class="inline-doc"></div-->
+            <div style="float:right" class="inline-doc">
+                <xsl:for-each select="$component/xsd:annotation/xsd:documentation">
+                   <xsl:copy-of select="."/>
+                </xsl:for-each>
+
             <!-- onclick attribute -->
+         <!--a href="javascript:void(0)" title="View Documentation" class="documentation">
             <xsl:attribute name="onclick">
                <xsl:text>docArray = new Array(</xsl:text>
-               <xsl:value-of select="$documentation"/>
+               <xsl:value-of select="$documentation" />
                <xsl:text>); viewDocumentation('</xsl:text>
                <xsl:call-template name="GetComponentDescription">
                   <xsl:with-param name="component" select="$component"/>
@@ -4336,7 +4354,11 @@ A local schema component contains two dashes in
                <xsl:text>', docArray);</xsl:text>
             </xsl:attribute>
             <xsl:text>?</xsl:text>
-         </a>
+         </a-->
+            </div>
+            <div style="clear:both" >
+            </div>
+
       </xsl:if>
    </xsl:template>
 
