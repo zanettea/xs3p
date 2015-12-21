@@ -3418,6 +3418,9 @@ div#legend div.hint {
                   </xsl:otherwise>
                </xsl:choose>
 
+               <xsl:text>"</xsl:text>
+            </span>
+
                <!-- Don't print occurrence info and documentation
                     for global attributes. -->
                <xsl:if test="local-name(..)!='schema'">
@@ -3432,8 +3435,6 @@ div#legend div.hint {
                   </xsl:call-template>
                </xsl:if>
 
-               <xsl:text>"</xsl:text>
-            </span>
          </xsl:otherwise>
       </xsl:choose>
    </xsl:template>
@@ -3520,13 +3521,13 @@ div#legend div.hint {
                <xsl:call-template name="PrintOccurs">
                   <xsl:with-param name="component" select="."/>
                </xsl:call-template>
+               <xsl:text>"</xsl:text>
+            </span>
                <!-- Documentation -->
                <xsl:call-template name="PrintSampleDocumentation">
                   <xsl:with-param name="component" select="."/>
                </xsl:call-template>
 
-               <xsl:text>"</xsl:text>
-            </span>
          </xsl:otherwise>
       </xsl:choose>
    </xsl:template>
